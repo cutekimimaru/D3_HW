@@ -1,0 +1,25 @@
+blockquote {
+    color: blue;
+}
+
+h1 {
+    color: rgba(0,0,0,255)
+}
+
+h1, blockquote {
+    background-color: gold;
+}
+
+strong {
+    color: #00f;
+    color: #f00;
+}
+
+.triangles {
+    width: 0; 
+    height: 0;
+    border-top: 50px solid green;
+    border-right: 50px solid red;
+    border-bottom: 50px solid blue;
+    border-left: 50px solid yellow;
+}
