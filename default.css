@@ -25,3 +25,9 @@
 .hw-02-2 {
   margin-top: 20px;
 }
+
+p {
+  border: 2px solid red;
+  width: 150px;
+  height: 50px;
+}

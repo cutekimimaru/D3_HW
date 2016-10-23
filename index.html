@@ -2,33 +2,89 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>D3_HW-02</title>
+    <title>D3_HW-03</title>
     <script src="//d3js.org/d3.v3.js"></script>
     <script src="script.js"></script>
     <link rel="stylesheet" href="default.css">
 </head>
 <body>
-    HW-02-1 <br />
-    <img src="http://static.giantbomb.com/uploads/original/0/26/9780-itsahim.JPG" width="80px" class="mario"/>
-    <div class="top">
-    </div>
-    <div class="bottom">
-    </div>
-    <hr />
     
-    <div class="hw-02-2">
-        HW-02-2 <br />
-        隨機取得介於N到M的整數: <br /> 
-        Math.ceil((m-n)*Math.random()+n);
+<!--
+        <circle cx="150" cy="120" r="15"></circle>
+        <rect x="160" y="45" width="5" height="78"></rect>
+-->
+    <div class="melody">
+        <svg width="300" height="200">
+            
+        </svg>
     </div>
-    
-    <hr />
-    <div class="hw-02-2">
-        HW-02-3 <br />
-        呼叫隨機取整數函示請參考script.js
+    <div class="rects">
+        <svg width="500" height="500">
+            
+        </svg>
     </div>
     <script>
-        var result = getRandomInt(55, 66);
+        
+        // part 1
+        drawLines();
+        
+        d3.select(".melody>svg")
+          .append("circle")
+          .attr({
+            cx: 150,
+            cy: 120,
+            r: 15
+            });
+        d3.select(".melody>svg")
+          .append("rect")
+          .attr({
+            x: 160,
+            y: 45,
+            width: 5,
+            height: 78
+           });
+        d3.select(".melody>svg")
+          .append("text")
+          .attr({
+            x: 140,
+            y: 195,
+            "font-size": 30,
+            "font-family": "arial"
+          })
+          .text("A");
+        
+        // part 2
+        for (var i=0; i<20; i=i+1) {
+            var curWidth = getRandomInt(20, 300);
+            var curHeight = 10 + 15*i;
+            d3.select(".rects>svg")
+              .append("rect")
+              .attr({
+                x: 10,
+                y: curHeight,
+                width: curWidth,
+                height: 10,
+                fill: "red"
+               });
+            d3.select(".rects>svg")
+              .append("text")
+              .attr({
+                x: curWidth + 15,
+                y: curHeight +12,
+                "font-size": 12,
+                "font-family": "arial"
+               })
+              .text(curWidth);
+        }
+
+//        var aaa = [1,2,3,4,5,6,7,8,9,10];
+//        for (var i=0; i< aaa.length ; i= i+1) {
+//            if (aaa[i]>5) {
+//                d3.select("body").append("div").text(aaa[i]).style({color: "red"})
+//            } else {
+//                d3.select("body").append("div").text(aaa[i]);
+//            }
+//        }
     </script>
 </body>
 </html>
