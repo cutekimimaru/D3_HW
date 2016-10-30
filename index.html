@@ -8,74 +8,62 @@
     <link rel="stylesheet" href="default.css">
 </head>
 <body>
-    
-<!--
-        <circle cx="150" cy="120" r="15"></circle>
-        <rect x="160" y="45" width="5" height="78"></rect>
--->
-    <div class="melody">
-        <svg width="300" height="200">
+    <svg class="invoice-data" width="1000" height="700">
             
-        </svg>
-    </div>
-    <div class="rects">
-        <svg width="500" height="500">
-            
-        </svg>
-    </div>
+    </svg>
     <script>
-        
         // part 1
-        drawLines();
-        
-        d3.select(".melody>svg")
-          .append("circle")
-          .attr({
-            cx: 150,
-            cy: 120,
-            r: 15
-            });
-        d3.select(".melody>svg")
-          .append("rect")
-          .attr({
-            x: 160,
-            y: 45,
-            width: 5,
-            height: 78
-           });
-        d3.select(".melody>svg")
-          .append("text")
-          .attr({
-            x: 140,
-            y: 195,
-            "font-size": 30,
-            "font-family": "arial"
-          })
-          .text("A");
+        d3.json("invoice.json", function(dataSet) {
+            var svg = d3.select(".invoice-data");
+            var count = 0;
+            let maxAmount = 1000000000;
+            let ratio = 30 / maxAmount;
+            for (var i=0; i< dataSet.length; i=i+1) {
+                if (parseInt(dataSet[i].amount) > maxAmount && dataSet[i].cid === 'A' && dataSet[i].date === '2016/8/1' ) {
+                    console.log(dataSet[i])
+                    svg.append("text")
+                       .attr({
+                         x: 10,
+                         y: 20 + count * 20
+                       })
+                       .text(`${dataSet[i].industry}`);
+                    svg.append("rect")
+                       .attr({
+                         x: 300,
+                         y: 5 + count * 20,
+                         width : dataSet[i].amount * ratio,
+                         height: 16,
+                         fill: "red"
+                       });
+                    count = count + 1;
+                    
+                }
+            }
+        });
         
         // part 2
-        for (var i=0; i<20; i=i+1) {
-            var curWidth = getRandomInt(20, 300);
-            var curHeight = 10 + 15*i;
-            d3.select(".rects>svg")
-              .append("rect")
-              .attr({
-                x: 10,
-                y: curHeight,
-                width: curWidth,
-                height: 10,
-                fill: "red"
-               });
-            d3.select(".rects>svg")
-              .append("text")
-              .attr({
-                x: curWidth + 15,
-                y: curHeight +12,
-                "font-size": 12,
-                "font-family": "arial"
-               })
-              .text(curWidth);
-        }
+//        for (var i=0; i<20; i=i+1) {
+//            var curWidth = getRandomInt(20, 300);
+//            var curHeight = 10 + 15*i;
+//            d3.select(".rects>svg")
+//              .append("rect")
+//              .attr({
+//                x: 10,
+//                y: curHeight,
+//                width: curWidth,
+//                height: 10,
+//                fill: "red"
+//               });
+//            d3.select(".rects>svg")
+//              .append("text")
+//              .attr({
+//                x: curWidth + 15,
+//                y: curHeight +12,
+//                "font-size": 12,
+//                "font-family": "arial"
+//               })
+//              .text(curWidth);
+//        }
 
 //        var aaa = [1,2,3,4,5,6,7,8,9,10];
 //        for (var i=0; i< aaa.length ; i= i+1) {
