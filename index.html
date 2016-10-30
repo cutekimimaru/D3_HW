@@ -7,7 +7,8 @@
     <script src="script.js"></script>
     <link rel="stylesheet" href="default.css">
 </head>
-<body>
+<body>    
+    <input type=button value="新增" onclick="update(arr);">
     <svg class="invoice-data" width="1000" height="700">
             
     </svg>
@@ -42,37 +43,129 @@
         });
         
         // part 2
-//        for (var i=0; i<20; i=i+1) {
-//            var curWidth = getRandomInt(20, 300);
-//            var curHeight = 10 + 15*i;
-//            d3.select(".rects>svg")
-//              .append("rect")
-//              .attr({
-//                x: 10,
-//                y: curHeight,
-//                width: curWidth,
-//                height: 10,
-//                fill: "red"
-//               });
-//            d3.select(".rects>svg")
-//              .append("text")
-//              .attr({
-//                x: curWidth + 15,
-//                y: curHeight +12,
-//                "font-size": 12,
-//                "font-family": "arial"
-//               })
-//              .text(curWidth);
-//        }
-
-//        var aaa = [1,2,3,4,5,6,7,8,9,10];
-//        for (var i=0; i< aaa.length ; i= i+1) {
-//            if (aaa[i]>5) {
-//                d3.select("body").append("div").text(aaa[i]).style({color: "red"})
-//            } else {
-//                d3.select("body").append("div").text(aaa[i]);
-//            }
-//        }
+        var scores = [85, 60, 99, 49, 77, 82];
+        bindScores(scores);
+        renderScores();
+        
+        function bindScores(data) {
+            var selection = d3 
+                            .select("body")
+                            .selectAll("div")
+                            .data(data);
+            selection.enter().append("div");
+            selection.exit().remove();
+        }
+        
+        function renderScores() {
+            d3
+                .selectAll("div")
+                .text(function(data, index) {
+                      return index + ": " + data;
+                      })
+                .attr({
+                    fill: function(data){
+                        if (data < 70) {
+                            return "red";
+                        } else {
+                            return "lightgreen"
+                        }
+                    }
+                });
+        }
+        
+        // part 3
+        var arr = [45, 78, 96, 35, 88, 69];
+        var w = 700;
+        var h = 400;
+        var p = 50;
+        
+        svg(w, h);
+        bind(arr);
+        render(h, p);
+        bindLabel(arr);
+        renderLabel(h, p);
+        
+        function update(arr) {
+            arr.push(getRandomInt(20, 100));
+            bind(arr);
+            render(h, p);
+            bindLabel(arr);
+            renderLabel(h, p);
+        }
+        
+        function svg(w, h) {
+            d3
+                .select("body")
+                .append("svg")
+                .attr({
+                    width: w ,
+                    height: h
+            });
+        }
+        
+        function bind(data) {
+            var selection = d3
+                                .select("svg")
+                                .selectAll("rect")
+                                .data(data);
+            selection.enter().append("rect");//綁定
+            selection.exit().remove();
+        }
+        
+        function render(h, p) {
+            d3
+                .selectAll("rect")
+                .attr({
+                    x: function(data, index) {
+                        return p+45*index
+                    },
+                    y: function(data) {
+                        return h - p - data;
+                    },
+                    width: 40,
+                    height: function(data) {
+                        return data;
+                    },
+                    fill: function(data) {
+                        if (data < 70) {
+                            return "red";
+                        } else {
+                            return "lightgreen";
+                        }
+                    }
+                });
+            
+        }
+        
+        function bindLabel(data) {
+            var selection = d3
+                                .select("svg")
+                                .selectAll("text")
+                                .data(data);
+            selection.enter().append("text");//綁定
+            selection.exit().remove();
+        }
+        
+        function renderLabel(h, p) {
+            var textPaddingX = 12;
+            var textPaddingY = 20;
+            
+            d3
+                .selectAll("text")
+                .attr({
+                    x: function(data, index) {
+                        return p + 45 * index + textPaddingX;
+                    },
+                    y: function(data) {
+                        return h - p + textPaddingY;
+                    },
+                    fill: "black"
+                })
+                .text(function(data){
+                    return data;
+                });
+            
+        }
     </script>
 </body>
 </html>
