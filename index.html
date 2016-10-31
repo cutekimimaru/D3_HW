@@ -2,16 +2,26 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>D3_HW-03</title>
+    <title>D3_HW-04</title>
     <script src="//d3js.org/d3.v3.js"></script>
     <script src="script.js"></script>
     <link rel="stylesheet" href="default.css">
 </head>
-<body>    
-    <input type=button value="新增" onclick="update(arr);">
-    <svg class="invoice-data" width="1000" height="700">
+<body>
+    <svg class="invoice-data" width="1000" height="250">
             
     </svg>
+    <hr />
+    
+    <div class="scores" style="width: 1000; height: 100">
+        <div></div>
+    </div>
+    <hr />
+    
+    <svg id = "svg2" class="invoice-vertical" width="1000" height="200">
+            
+    </svg>
+    <input type=button value="新增" onclick="update();">
     <script>
         // part 1
         d3.json("invoice.json", function(dataSet) {
@@ -21,7 +31,6 @@
             let ratio = 30 / maxAmount;
             for (var i=0; i< dataSet.length; i=i+1) {
                 if (parseInt(dataSet[i].amount) > maxAmount && dataSet[i].cid === 'A' && dataSet[i].date === '2016/8/1' ) {
-                    console.log(dataSet[i])
                     svg.append("text")
                        .attr({
                          x: 10,
@@ -49,8 +58,8 @@
         
         function bindScores(data) {
             var selection = d3 
-                            .select("body")
-                            .selectAll("div")
+                            .select(".scores")
+                            .selectAll(".scores div")
                             .data(data);
             selection.enter().append("div");
             selection.exit().remove();
@@ -58,16 +67,18 @@
         
         function renderScores() {
             d3
-                .selectAll("div")
+                .select(".scores")
+                .selectAll(".scores div")
                 .text(function(data, index) {
                       return index + ": " + data;
                       })
                 .attr({
-                    fill: function(data){
-                        if (data < 70) {
-                            return "red";
+                    style: function(data) {
+                        if (data > 70) {
+                            return "color: black";
                         } else {
-                            return "lightgreen"
+                            return "color: red";
+
                         }
                     }
                 });
@@ -75,37 +86,28 @@
         
         // part 3
         var arr = [45, 78, 96, 35, 88, 69];
-        var w = 700;
-        var h = 400;
-        var p = 50;
+        var w = 1000;
+        var h = 200;
+        var p = 30;
         
-        svg(w, h);
         bind(arr);
         render(h, p);
         bindLabel(arr);
         renderLabel(h, p);
         
-        function update(arr) {
-            arr.push(getRandomInt(20, 100));
+        function update() {
+            var newOne = getRandomInt(20, 100) 
+            arr.push(newOne);
+            console.log(arr);
             bind(arr);
             render(h, p);
             bindLabel(arr);
             renderLabel(h, p);
         }
         
-        function svg(w, h) {
-            d3
-                .select("body")
-                .append("svg")
-                .attr({
-                    width: w ,
-                    height: h
-            });
-        }
-        
         function bind(data) {
             var selection = d3
-                                .select("svg")
+                                .select(".invoice-vertical")
                                 .selectAll("rect")
                                 .data(data);
             selection.enter().append("rect");//綁定
@@ -114,6 +116,7 @@
         
         function render(h, p) {
             d3
+                .select(".invoice-vertical")
                 .selectAll("rect")
                 .attr({
                     x: function(data, index) {
@@ -139,7 +142,7 @@
         
         function bindLabel(data) {
             var selection = d3
-                                .select("svg")
+                                .select(".invoice-vertical")
                                 .selectAll("text")
                                 .data(data);
             selection.enter().append("text");//綁定
@@ -151,6 +154,7 @@
             var textPaddingY = 20;
             
             d3
+                .select(".invoice-vertical")
                 .selectAll("text")
                 .attr({
                     x: function(data, index) {
