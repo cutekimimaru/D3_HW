@@ -8,6 +8,14 @@ function getRandomInt(n, m) {
     return Math.ceil((m-n)*Math.random()+n);
 }
 
+function getRandomIntByScale(n, m) {
+    console.log("your input", n, m);
+    var rScale = d3.scale.linear()
+        .domain([0, 1])
+        .rangeRound([n,m]);
+    return rScale(Math.random());
+}
+
 // draw the five lines
 function drawLines () {
     for (var i=0; i<5; i=i+1) {
